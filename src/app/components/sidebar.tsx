@@ -2,13 +2,14 @@
 import React from 'react';
 import Image from 'next/image';
 import SidebarItem from './sidebar-item';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 export interface SidebarProps {}
 
 export default function Sidebar({}: SidebarProps) {
 
   const router = useRouter();
+  const pathname = usePathname() // визначаємо поточний маршрут
   const handleExitClick = () => {
 router.push('/')
   }
@@ -25,6 +26,7 @@ router.push('/')
         />
         <ul className="space-y-7">
           <SidebarItem
+          current={pathname === "/dashboard"}
             pathname="/dashboard"
             src="/icons/squares.svg"
             alt="dashboard icon"
@@ -32,6 +34,7 @@ router.push('/')
             Dashboard
           </SidebarItem>
           <SidebarItem
+          current={pathname === "/companies"}
             pathname="/companies"
             src="/icons/briefcase.svg"
             alt="companies icon"
