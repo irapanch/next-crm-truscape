@@ -34,10 +34,3 @@ export default async function Page({}: PageProps) {
   );
 }
 
-{/* <Link href={`/dashboard/${key}`} key={key} className="col-span-3">
-          <StatCard
-            type={StatCardType.Gradient}
-            label={labelByStat[key]}
-            counter={data[key]}
-          />
-        </Link> */}
