@@ -2,65 +2,67 @@ import React from 'react';
 import Image from 'next/image';
 import clsx from 'clsx';
 import StatusLabel, { Status } from '@/app/components/status-label';
+// import { CompanyStatus } from '../lib/api';
 
 export interface CompanyRowProps {
-  id: number;
-  category: string;
-  company: string;
+  
+  id: string;
+  title: string;
+  description?: string;
   status: Status;
-  promotion: boolean;
-  country: string;
   joinedDate: string;
+  hasPromotions: boolean;
+  categoryId?: string;
+  categoryTitle: string;
+  countryId?: string;
+  countryTitle: string;
+  avatar?: string;
 }
 
-const labelByStatus = {
-  [Status.Active]: 'Active',
-  [Status.NotActive]: 'Not Active',
-  [Status.Pending]: 'Pending',
-  [Status.Suspended]: 'Suspended',
-};
+// const labelByStatus = {
+//   [Status.Active]: 'Active',
+//   [Status.NotActive]: 'Not Active',
+//   [Status.Pending]: 'Pending',
+//   [Status.Suspended]: 'Suspended',
+// };
 
 export default function CompanyRow({
-  id,
-  category,
-  company,
-  status,
-  promotion,
-  country,
-  joinedDate,
+
+  id, categoryTitle, title, status, hasPromotions,countryTitle, joinedDate,
 }: CompanyRowProps) {
+  
   return (
     <tr className="h-14 text-center text-gray-900 bg-white">
       <td className="text-xs font-medium text-blue-700 rounded-l border-l-4 border-blue-700">
-        {category}
+        {categoryTitle}
       </td>
       <td>
-        <a href={`/companies/${id}`}>{company}</a>
+        <a href={`/companies/${id}`}>{ title}</a>
       </td>
       <td>
-        <StatusLabel status={status}>{labelByStatus[status]}</StatusLabel>
+        <StatusLabel status={status}>{status}</StatusLabel>
       </td>
       <td>
         <div className="inline-flex items-center gap-1">
           <Image
             width={16}
             height={16}
-            src={`/icons/${promotion ? 'check' : 'x-mark'}.svg`}
+            src={`/icons/${hasPromotions ? 'check' : 'x-mark'}.svg`}
             alt="promotion icon"
           />
           <span
             className={clsx(
               'text-sm font-medium',
-              promotion ? 'text-green-700' : 'text-red-700',
+              hasPromotions? 'text-green-700' : 'text-red-700',
             )}
           >
-            {promotion ? 'Yes' : 'No'}
+            {hasPromotions? 'Yes' : 'No'}
           </span>
         </div>
       </td>
-      <td>{country}</td>
+      <td>{countryTitle}</td>
       <td className="rounded-r">
-        {new Date(joinedDate).toLocaleDateString('uk-UA')}
+      {new Date(joinedDate).toLocaleDateString('uk-UA')}
       </td>
     </tr>
   );

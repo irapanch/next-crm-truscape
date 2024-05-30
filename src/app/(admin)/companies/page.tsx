@@ -1,22 +1,32 @@
 import React from 'react';
 import CompanyTable from '@/app/components/company-table';
 import CompanyRow from '@/app/components/company-row';
-import { Status } from '@/app/components/status-label';
+
+import {  getCompanies } from '@/app/lib/api';
 
 export interface PageProps {}
 
-export default function Page({}: PageProps) {
+export default async function Page({}: PageProps) {
+  const data = await getCompanies();
   return (
     <CompanyTable>
-      <CompanyRow
-        id={1}
-        category="Products"
-        company="Costco"
-        status={Status.Pending}
-        promotion={true}
-        country="USA"
-        joinedDate="02.19.2023"
-      />
+
+{data.map(({ id, categoryTitle, title, status, hasPromotions,countryTitle, joinedDate, }) => (
+          <CompanyRow key={id} 
+          id={id} 
+          categoryTitle={categoryTitle}
+        title={title}
+        status={status}
+        hasPromotions={hasPromotions}
+        countryTitle={countryTitle}
+        joinedDate={joinedDate}
+          />
+       
+       
+        ))}
+
+
+      
     </CompanyTable>
   );
 }
