@@ -1,8 +1,7 @@
 import React from 'react';
-import StatCard from '@/app/components/stat-card';
-import { getSummaryStats } from '@/app/lib/api';
-import { StatCardType } from '@/app/components/stat-card/stat-card';
-import Link from 'next/link';
+import StatCard, { StatCardType }from '@/app/components/stat-card';
+// import Link from 'next/link';
+import { SummaryStats, getSummaryStats } from '@/app/lib/api';
 
 export interface PageProps {}
 
@@ -14,19 +13,31 @@ const labelByStat = {
 };
 
 export default async function Page({}: PageProps) {
-  const data = await getSummaryStats();
+  const data = await getSummaryStats({
+    next: { // встановлення терміну кешування даних
+      revalidate: 5,
+    }
+  });
 
   return (
     <div className="grid grid-cols-12 gap-5">
-      {(Object.keys(labelByStat) as (keyof typeof data)[]).map((key) => (
-        <Link href={`/dashboard/${key}`} key={key} className="col-span-3">
+      {(Object.keys(labelByStat) as (keyof SummaryStats)[]).map((key) => (
+        <div className="col-span-3">
           <StatCard
             type={StatCardType.Gradient}
             label={labelByStat[key]}
             counter={data[key]}
           />
-        </Link>
+        </div>
       ))}
     </div>
   );
 }
+
+{/* <Link href={`/dashboard/${key}`} key={key} className="col-span-3">
+          <StatCard
+            type={StatCardType.Gradient}
+            label={labelByStat[key]}
+            counter={data[key]}
+          />
+        </Link> */}
