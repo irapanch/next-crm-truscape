@@ -44,7 +44,7 @@ export interface SummaryStats {
     avatar?: string;
   }
   
-  export interface Promotion {
+  export interface PromotionData {
     id: string;
     title: string;
     description: string;
@@ -99,7 +99,7 @@ export interface SummaryStats {
     params: Record<string, string> = {},
     init?: RequestInit,
   ) => {
-    return sendRequest<Promotion[]>(
+    return sendRequest<PromotionData[]>(
       `${buildUrl('promotions')}?${stringifyQueryParams(params)}`,
       init,
     );
